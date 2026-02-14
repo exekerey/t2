@@ -1,0 +1,71 @@
+# =====================
+# OS
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Python / FastAPI
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+.env
+.env.*
+
+venv/
+.venv/
+env/
+
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+*.sqlite3
+
+# Alembic
+alembic/versions/*.pyc
+
+# =====================
+# Node / React
+# =====================
+node_modules/
+dist/
+build/
+.next/
+out/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite
+.vite/
+
+# =====================
+# IDE
+# =====================
+.vscode/
+.idea/
+*.iml
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+
+# =====================
+# Docker
+# =====================
+docker-compose.override.yml
+
+# =====================
+# Testing
+# =====================
+coverage/
