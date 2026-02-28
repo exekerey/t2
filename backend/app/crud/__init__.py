@@ -1,0 +1,1 @@
+from app.crud.crud_training_request_participant import training_request_participant
