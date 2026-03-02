@@ -23,3 +23,7 @@ class TrainingRequest(TimestampedBase):
     
     participants = relationship("TrainingRequestParticipant", back_populates="request")
     spends = relationship("ContractSpend", back_populates="request")
+
+    @property
+    def participant_count(self) -> int:
+        return len(self.participants)
