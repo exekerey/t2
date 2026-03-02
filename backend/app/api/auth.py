@@ -50,6 +50,14 @@ def register(
             detail="The user with this email already exists in the system.",
         )
 
+    # Department is required for EMPLOYEE and MANAGER roles
+    if employee_in.role in [schemas.EmployeeRole.EMPLOYEE, schemas.EmployeeRole.MANAGER]:
+        if employee_in.department_id is None:
+            raise HTTPException(
+                status_code=400,
+                detail="Department ID is required for Employee and Manager roles.",
+            )
+
     if employee_in.department_id is not None:
         department = crud.department.get(db, id=employee_in.department_id)
         if not department:
