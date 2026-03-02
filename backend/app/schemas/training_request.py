@@ -1,7 +1,7 @@
 from typing import Optional, List
 import uuid
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .enums import TrainingRequestStatus, AttendanceStatus
 
 # Participant Schemas
@@ -22,7 +22,7 @@ class TrainingRequestParticipant(TrainingRequestParticipantBase):
     certificate_number: Optional[str] = None
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 # Request Schemas
@@ -34,6 +34,17 @@ class TrainingRequestCreate(TrainingRequestBase):
     training_id: uuid.UUID
     participant_ids: List[uuid.UUID]
 
+class TrainingRequestSubmit(BaseModel):
+    pass
+
+
+class TrainingRequestApprove(BaseModel):
+    contract_id: uuid.UUID
+
+
+class TrainingRequestReject(BaseModel):
+    reject_reason: str = Field(..., min_length=1, description="Reason is required on reject")
+
 class TrainingRequestUpdate(BaseModel):
     status: Optional[TrainingRequestStatus] = None
     reject_reason: Optional[str] = None
@@ -42,9 +53,11 @@ class TrainingRequestUpdate(BaseModel):
 class TrainingRequest(TrainingRequestBase):
     id: uuid.UUID
     status: TrainingRequestStatus
+    reject_reason: Optional[str] = None
     cost_amount: float
     submitted_at: Optional[datetime] = None
     decided_at: Optional[datetime] = None
+    contract_id: Optional[uuid.UUID] = None
     participants: List[TrainingRequestParticipant] = []
 
     class Config:
