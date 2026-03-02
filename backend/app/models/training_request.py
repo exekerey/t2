@@ -9,7 +9,7 @@ class TrainingRequest(TimestampedBase):
     __tablename__ = "training_requests"
     status = Column(Enum(TrainingRequestStatus), nullable=False, default=TrainingRequestStatus.SUBMITTED)
     reject_reason = Column(String, nullable=True)
-    cost_amount = Column(Numeric, nullable=False)
+    cost_amount = Column(Numeric, nullable=False, default=0)
     submitted_at = Column(DateTime, nullable=True)
     decided_at = Column(DateTime, nullable=True)
 

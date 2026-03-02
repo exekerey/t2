@@ -15,7 +15,7 @@ from app.schemas.training_request import (
     TrainingRequestApprove,
     TrainingRequestReject,
 )
-from app.schemas.enums import TrainingRequestStatus, TrainingPricingModel
+from app.schemas.enums import TrainingRequestStatus, TrainingPricingModel, ContractStatus
 
 
 class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]):
@@ -26,11 +26,12 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         obj_in: TrainingRequestCreate,
         manager_id: UUID,
     ) -> TrainingRequest:
-        # Create a draft application (status = submitted later when submitting)
+        # Create request with SUBMITTED status (cost calculated on approve)
         db_obj = TrainingRequest(
             training_id=obj_in.training_id,
             manager_id=manager_id,
             status=TrainingRequestStatus.SUBMITTED,
+            cost_amount=0,
             submitted_at=func.now(),
         )
         db.add(db_obj)
@@ -84,7 +85,7 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         if not contract:
             raise HTTPException(404, "Contract not found")
 
-        if contract.status != "active":
+        if contract.status != ContractStatus.ACTIVE:
             raise HTTPException(400, "Contract is not active")
 
         # Calculating the cost
@@ -143,27 +144,45 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         return request
 
     def get_multi_by_manager(
-        self, db: Session, *, manager_id: UUID, skip: int = 0, limit: int = 100
+        self,
+        db: Session,
+        *,
+        manager_id: UUID,
+        status: Optional[TrainingRequestStatus] = None,
+        skip: int = 0,
+        limit: int = 100,
     ) -> List[TrainingRequest]:
-        return (
-            db.query(self.model)
-            .filter(self.model.manager_id == manager_id)
-            .offset(skip)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(self.model).filter(self.model.manager_id == manager_id)
+        if status:
+            query = query.filter(self.model.status == status)
+        return query.offset(skip).limit(limit).all()
 
     def get_inbox(
-        self, db: Session, *, skip: int = 0, limit: int = 100
+        self,
+        db: Session,
+        *,
+        status: Optional[TrainingRequestStatus] = None,
+        skip: int = 0,
+        limit: int = 100,
     ) -> List[TrainingRequest]:
-        "For HR - submitted applications only"
-        return (
-            db.query(self.model)
-            .filter(self.model.status == TrainingRequestStatus.SUBMITTED)
-            .offset(skip)
-            .limit(limit)
-            .all()
-        )
+        """For HR - submitted applications only"""
+        query = db.query(self.model).filter(self.model.status == TrainingRequestStatus.SUBMITTED)
+        if status:
+            query = query.filter(self.model.status == status)
+        return query.offset(skip).limit(limit).all()
+
+    def get_multi_with_filter(
+        self,
+        db: Session,
+        *,
+        status: Optional[TrainingRequestStatus] = None,
+        skip: int = 0,
+        limit: int = 100,
+    ) -> List[TrainingRequest]:
+        query = db.query(self.model)
+        if status:
+            query = query.filter(self.model.status == status)
+        return query.offset(skip).limit(limit).all()
 
 
 training_request = CRUDTrainingRequest(TrainingRequest)

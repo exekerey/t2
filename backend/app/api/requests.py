@@ -1,4 +1,4 @@
-from typing import List, Any, Optional
+from typing import List, Optional
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -35,28 +35,6 @@ def create_request(
     )
 
 
-@router.post(
-    "/{request_id}/submit",
-    response_model=TrainingRequest,
-    summary="Submit request to HR (Manager)",
-)
-def submit_request(
-    request_id: UUID,
-    db: Session = Depends(get_db),
-    current_user: models.Employee = Depends(get_current_active_manager_user),
-):
-    # In MVP, submit simply confirms that the request is already in the submitted status.
-    # # You can add a check that the request belongs to a manager.
-    request = crud.training_request.get(db, id=request_id)
-    if not request:
-        raise HTTPException(404, "Request not found")
-    if request.manager_id != current_user.id:
-        raise HTTPException(403, "Not your request")
-    if request.status != schemas.TrainingRequestStatus.SUBMITTED:
-        raise HTTPException(400, "Request already processed")
-    return request
-
-
 @router.get(
     "/",
     response_model=List[TrainingRequest],
@@ -72,21 +50,17 @@ def get_requests(
 ):
     if current_user.role == schemas.enums.EmployeeRole.HR:
         if scope == "inbox":
-            requests = crud.training_request.get_inbox(db, skip=skip, limit=limit)
+            requests = crud.training_request.get_inbox(db, status=status, skip=skip, limit=limit)
         else:
-            requests = crud.training_request.get_multi(db, skip=skip, limit=limit)
+            requests = crud.training_request.get_multi_with_filter(db, status=status, skip=skip, limit=limit)
     elif current_user.role == schemas.enums.EmployeeRole.MANAGER:
         if scope != "mine":
             raise HTTPException(403, "Managers can only see their own requests")
         requests = crud.training_request.get_multi_by_manager(
-            db, manager_id=current_user.id, skip=skip, limit=limit
+            db, manager_id=current_user.id, status=status, skip=skip, limit=limit
         )
     else:
         raise HTTPException(403, "Not allowed")
-
-    # Filter by status if transferred
-    if status:
-        requests = [r for r in requests if r.status == status]
 
     return requests
 
