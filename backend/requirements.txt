@@ -6,6 +6,7 @@ alembic
 pydantic
 pydantic-settings
 passlib[bcrypt]
+bcrypt<5
 python-jose[cryptography]
 python-multipart
 python-dotenv

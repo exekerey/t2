@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 from pydantic import BaseModel
 
 # Shared properties
@@ -15,11 +16,11 @@ class DepartmentUpdate(DepartmentBase):
 
 # Properties to return to client
 class DepartmentInDB(DepartmentUpdate):
-    id: str
+    id: UUID
     name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Department(DepartmentInDB):
     pass

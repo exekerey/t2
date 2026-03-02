@@ -31,7 +31,7 @@ class ContractInDB(ContractBase):
     id: uuid.UUID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Contract(ContractInDB):
     pass
