@@ -1,13 +1,34 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from sqlalchemy.orm import Session
 from app.crud.base import CRUDBase
 from app.models.employee import Employee
 from app.schemas.employee import EmployeeCreate, EmployeeUpdate
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password
 
 class CRUDEmployee(CRUDBase[Employee, EmployeeCreate, EmployeeUpdate]):
     def get_by_email(self, db: Session, *, email: str) -> Optional[Employee]:
         return db.query(Employee).filter(Employee.email == email).first()
+
+    def authenticate(self, db: Session, *, email: str, password: str) -> Optional[Employee]:
+        user = self.get_by_email(db, email=email)
+        if not user:
+            return None
+        if not verify_password(password, user.hashed_password):
+            return None
+        return user
+
+    def get_multi_by_department(
+        self,
+        db: Session,
+        *,
+        department_id: Optional[Any] = None,
+        skip: int = 0,
+        limit: int = 100,
+    ) -> List[Employee]:
+        query = db.query(Employee)
+        if department_id:
+            query = query.filter(Employee.department_id == department_id)
+        return query.offset(skip).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: EmployeeCreate) -> Employee:
         db_obj = Employee(
