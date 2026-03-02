@@ -26,7 +26,7 @@ class CRUDEmployee(CRUDBase[Employee, EmployeeCreate, EmployeeUpdate]):
         limit: int = 100,
     ) -> List[Employee]:
         query = db.query(Employee)
-        if department_id:
+        if department_id is not None:
             query = query.filter(Employee.department_id == department_id)
         return query.offset(skip).limit(limit).all()
 
