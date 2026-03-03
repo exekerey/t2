@@ -1,0 +1,291 @@
+.hrLayout{
+  height: 900px;    
+  width: 100%;
+  display: flex;
+  background: #e9eef6;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow: hidden;   
+}
+
+/* SIDEBAR */
+.hrSidebar{
+  width: 280px;
+  height: 900px;
+  background: #2b2d42;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px;
+}
+
+.hrBrand{
+  display: flex;
+  font-weight: 20px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.hrDivider{
+  height: 1px;
+  background: #6A6969;
+
+  margin-left: -16px;   /* компенсируем padding sidebar */
+  margin-right: -16px;
+  margin-bottom: 64px;  /* отступ вниз */
+}
+.hrLogo{
+  width: 43px;
+  height: 42px;
+  border-radius: 15px;
+  background: #C6D6EC;
+}
+.hrBrandText{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.hrProfile{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #4A4E69;
+  border-radius: 15px;
+  padding: 10px;
+  margin-bottom: 48px;
+}
+.hrAvatar{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #D9D9D9;
+}
+
+.hrProfileText{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+.hrName{ 
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2;
+}
+.hrRole{ opacity: .85; font-size: 13px; font-weight: bold;}
+
+.hrNav{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.hrNavItem{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 400;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 0;
+  background: transparent;
+  color: #FFFFFF;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+}
+.hrNavItem:hover{ background: rgba(255,255,255,0.08); }
+.hrNavItem.active{ background: rgba(255,255,255,0.10); }
+
+.hrNavIcon {
+  width: 24px;
+  display: inline-flex;
+  justify-content: center;
+  opacity: .95;
+  color: #FFFFFF;
+}
+
+.hrSidebarBottom{
+  margin-top: auto;
+  margin-bottom: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hrBottomItem{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  cursor: pointer;
+  text-align: left;
+  font-size: 15px;
+}
+.hrBottomItem:hover{ background: rgba(255,255,255,0.08); }
+
+/* MAIN */
+.hrMain{
+  height: 900px;
+  width: 1160px;
+  overflow-y: auto;
+  flex: 1;
+  padding: 26px 28px;
+}
+
+.hrTopbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.hrTitle{
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: #383838;
+}
+
+.hrTopRight{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hrSearch{
+  display: flex;
+  align-items: center;       
+  gap: 19px;
+
+  background: #D9D9D9;
+  border-radius: 15px;
+  padding: 0 18px;          
+  height: 35px;            
+  width: 180px;             
+}
+.hrSearch input{
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+.hrIconBtn{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;     
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;       
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;            
+  line-height: 0;         
+  outline: none;
+}
+
+.hrIconBtn:hover{
+  background: rgba(15,23,42,0.06);
+}
+
+.hrIconBtn:active{
+  background: rgba(15,23,42,0.10);
+}
+.hrIconBtn:focus,
+.hrIconBtn:focus-visible{
+  outline: none;
+  box-shadow: none;
+}
+.hrIconBtn svg,
+.hrIconBtn img{
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* CARDS */
+.hrCard{
+  background: #fff;
+  border-radius: 18px;
+}
+
+.hrStats{
+  display: flex;
+  flex-direction: rows;
+  gap: 18px;
+  margin: 8px 0 15px;
+}
+.hrStatCard{ width: 180px; height: 134px; }
+
+.hrGrid2{
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.hrSectionHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 12px 0; 
+  height: 32px;
+}
+.hrSectionHeader h2{
+  margin: 0;
+  line-height: 1;
+  font-size: 20px;
+  font-weight: 400;
+  color: #000000;
+}
+.hrLinkBtn{
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  line-height: 32px; 
+  color: #0f172a;
+  opacity: .75;
+  font-size: 16px;
+  font-weight: 400;
+}
+.hrLinkBtn:hover{ opacity: 1; }
+
+.hrBigCard{ 
+    height: 298px; 
+    width: 488px;
+}
+
+.hrBigCard2{ 
+    height: 298px; 
+    width: 384px;
+}
+.hrContracts{ margin-top: 24px; }
+
+.hrGrid2Bottom{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.hrMidCard{ height: 184px; }
+
+/* Responsive */
+@media (max-width: 1200px){
+  .hrStats{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 980px){
+  .hrSidebar{ width: 240px; }
+  .hrGrid2{ grid-template-columns: 1fr; }
+  .hrStats{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .hrSidebar{ display: none; }
+  .hrSearch{ width: 180px; }
+  .hrGrid2Bottom{ grid-template-columns: 1fr; }
+}

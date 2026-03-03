@@ -1,13 +1,5 @@
 // import { useState } from 'react'
 import './App.css'
+import HrDashboard from "./pages/HrDashboard";
 
-function App() {
-  
-  return (
-    <>
-      
-    </>
-  )
-}
-
-export default App
+export default function App(){ return <HrDashboard />; }
