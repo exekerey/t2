@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.training import Training
 from app.crud.base import CRUDBase
 from app.schemas.training import TrainingCreate, TrainingUpdate
+import uuid
 
 class CRUDTraining(CRUDBase[Training, TrainingCreate, TrainingUpdate]):
     def get_multi_filtered(
