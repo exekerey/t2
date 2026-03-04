@@ -1,8 +1,9 @@
 from datetime import timedelta
 from typing import Any
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
@@ -48,7 +49,32 @@ def register(
             status_code=400,
             detail="The user with this email already exists in the system.",
         )
-    user = crud.employee.create(db, obj_in=employee_in)
+
+    # Department is required for EMPLOYEE and MANAGER roles
+    if employee_in.role in [schemas.EmployeeRole.EMPLOYEE, schemas.EmployeeRole.MANAGER]:
+        if employee_in.department_id is None:
+            raise HTTPException(
+                status_code=400,
+                detail="Department ID is required for Employee and Manager roles.",
+            )
+
+    if employee_in.department_id is not None:
+        department = crud.department.get(db, id=employee_in.department_id)
+        if not department:
+            raise HTTPException(
+                status_code=400,
+                detail="Department with this id does not exist.",
+            )
+
+    try:
+        user = crud.employee.create(db, obj_in=employee_in)
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid employee data or database constraints violation.",
+        )
+
     return user
 
 

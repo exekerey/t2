@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 from pydantic import BaseModel, EmailStr, HttpUrl
 
 # Shared properties
@@ -23,10 +24,10 @@ class SupplierUpdate(SupplierBase):
 
 # Properties to return to client
 class SupplierInDB(SupplierUpdate):
-    id: str
-    
+    id: UUID
+
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Supplier(SupplierInDB):
     pass
