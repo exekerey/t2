@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
+import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -31,8 +32,6 @@ export default function Register() {
 
     try {
       await register(form);
-
-      // after successful registration go to login
       navigate("/login");
     } catch (err) {
       setError(
@@ -46,11 +45,12 @@ export default function Register() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
-      <form onSubmit={handleSubmit} style={{ width: 360, display: "grid", gap: 12 }}>
-        <h2>Register</h2>
+    <div className="registerPage">
+      <form className="registerForm" onSubmit={handleSubmit}>
+        <h2 className="registerTitle">Register</h2>
 
         <input
+          className="registerInput"
           name="full_name"
           placeholder="Full name"
           value={form.full_name}
@@ -59,6 +59,7 @@ export default function Register() {
         />
 
         <input
+          className="registerInput"
           name="email"
           type="email"
           placeholder="Email"
@@ -68,6 +69,7 @@ export default function Register() {
         />
 
         <input
+          className="registerInput"
           name="password"
           type="password"
           placeholder="Password"
@@ -77,6 +79,7 @@ export default function Register() {
         />
 
         <select
+          className="registerInput"
           name="role"
           value={form.role}
           onChange={handleChange}
@@ -86,11 +89,11 @@ export default function Register() {
           <option value="HR">HR</option>
         </select>
 
-        <button type="submit" disabled={loading}>
+        <button className="registerButton" type="submit" disabled={loading}>
           {loading ? "Registering..." : "Register"}
         </button>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="registerError">{error}</p>}
       </form>
     </div>
   );
