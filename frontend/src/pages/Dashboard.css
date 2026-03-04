@@ -1,4 +1,4 @@
-.hrLayout{
+.layout{
   height: 900px;    
   width: 100%;
   display: flex;
@@ -9,7 +9,7 @@
 }
 
 /* SIDEBAR */
-.hrSidebar{
+.sidebar{
   width: 280px;
   height: 900px;
   background: #2b2d42;
@@ -19,14 +19,14 @@
   padding: 18px 16px;
 }
 
-.hrBrand{
+.brand{
   display: flex;
   font-weight: 20px;
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
 }
-.hrDivider{
+.divider{
   height: 1px;
   background: #6A6969;
 
@@ -34,18 +34,18 @@
   margin-right: -16px;
   margin-bottom: 64px;  /* отступ вниз */
 }
-.hrLogo{
+.logo{
   width: 43px;
   height: 42px;
   border-radius: 15px;
   background: #C6D6EC;
 }
-.hrBrandText{
+.brandText{
   font-weight: bold;
   font-size: 20px;
 }
 
-.hrProfile{
+.profile{
   display: flex;
   align-items: center;
   gap: 12px;
@@ -54,33 +54,33 @@
   padding: 10px;
   margin-bottom: 48px;
 }
-.hrAvatar{
+.avatar{
   width: 35px;
   height: 35px;
   border-radius: 50%;
   background: #D9D9D9;
 }
 
-.hrProfileText{
+.profileText{
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: left;
 }
-.hrName{ 
+.name{ 
     font-weight: 400;
     font-size: 18px;
     line-height: 1.2;
 }
-.hrRole{ opacity: .85; font-size: 13px; font-weight: bold;}
+.role{ opacity: .85; font-size: 13px; font-weight: bold;}
 
-.hrNav{
+.nav{
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 4px;
 }
-.hrNavItem{
+.navItem{
   display: flex;
   align-items: center;
   gap: 12px;
@@ -94,10 +94,10 @@
   text-align: left;
   font-size: 16px;
 }
-.hrNavItem:hover{ background: rgba(255,255,255,0.08); }
-.hrNavItem.active{ background: rgba(255,255,255,0.10); }
+.navItem:hover{ background: rgba(255,255,255,0.08); }
+.navItem.active{ background: rgba(255,255,255,0.10); }
 
-.hrNavIcon {
+.navIcon {
   width: 24px;
   display: inline-flex;
   justify-content: center;
@@ -105,7 +105,7 @@
   color: #FFFFFF;
 }
 
-.hrSidebarBottom{
+.sidebarBottom{
   margin-top: auto;
   margin-bottom: 20px;
   padding-top: 14px;
@@ -118,7 +118,7 @@
   padding-left: 16px;   
   padding-right: 16px;
 }
-.hrBottomItem{
+.bottomItem{
   display: flex;
   align-items: center;
   gap: 12px;
@@ -131,10 +131,10 @@
   text-align: left;
   font-size: 15px;
 }
-.hrBottomItem:hover{ background: rgba(255,255,255,0.08); }
+.bottomItem:hover{ background: rgba(255,255,255,0.08); }
 
 /* MAIN */
-.hrMain{
+.main{
   height: 900px;
   width: 1160px;
   overflow-y: auto;
@@ -142,25 +142,25 @@
   padding: 26px 28px;
 }
 
-.hrTopbar{
+.topbar{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 16px;
 }
-.hrTitle{
+.title{
   margin: 0;
   font-size: 24px;
   font-weight: 400;
   color: #383838;
 }
 
-.hrTopRight{
+.topRight{
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.hrSearch{
+.search{
   display: flex;
   align-items: center;       
   gap: 19px;
@@ -171,14 +171,14 @@
   height: 35px;            
   width: 180px;             
 }
-.hrSearch input{
+.search input{
   width: 100%;
   border: 0;
   outline: none;
   background: transparent;
   font-size: 14px;
 }
-.hrIconBtn{
+.iconBtn{
   width: 40px;
   height: 40px;
   border-radius: 50%;     
@@ -195,61 +195,74 @@
   outline: none;
 }
 
-.hrIconBtn:hover{
+.iconBtn:hover{
   background: rgba(15,23,42,0.06);
 }
 
-.hrIconBtn:active{
+.iconBtn:active{
   background: rgba(15,23,42,0.10);
 }
-.hrIconBtn:focus,
-.hrIconBtn:focus-visible{
+.iconBtn:focus,
+.iconBtn:focus-visible{
   outline: none;
   box-shadow: none;
 }
-.hrIconBtn svg,
-.hrIconBtn img{
+.iconBtn svg,
+.iconBtn img{
   display: block;
   width: 22px;
   height: 22px;
 }
 
 /* CARDS */
-.hrCard{
+.card{
   background: #fff;
   border-radius: 18px;
 }
 
-.hrStats{
+.stats{
   display: flex;
   flex-direction: rows;
   gap: 18px;
   margin: 8px 0 15px;
 }
-.hrStatCard{ width: 180px; height: 134px; }
+.statCard{ width: 180px; height: 134px; }
 
-.hrGrid2{
+.employeeStats{
+  display: flex;
+  gap: 24px;
+  margin: 10px 0 20px;
+}
+
+.employeeStatCard{
+  flex: 1;            /* карточки растягиваются */
+  height: 150px;
+  border-radius: 20px;
+}
+
+.grid2{
   display: grid;
   grid-template-columns: 1.25fr 0.95fr;
   gap: 22px;
   align-items: start;
 }
 
-.hrSectionHeader{
+.sectionHeader{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 0 0 12px 0; 
   height: 32px;
 }
-.hrSectionHeader h2{
+.sectionHeader h2{
   margin: 0;
   line-height: 1;
   font-size: 20px;
   font-weight: 400;
   color: #000000;
 }
-.hrLinkBtn{
+
+.linkBtn{
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -259,37 +272,52 @@
   font-size: 16px;
   font-weight: 400;
 }
-.hrLinkBtn:hover{ opacity: 1; }
 
-.hrBigCard{ 
+.linkBtn:hover{ opacity: 1; }
+
+.historyBtn{
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.historyBtn:hover{
+  color: #111827;
+}
+
+.bigCard{ 
     height: 298px; 
     width: 488px;
 }
 
-.hrBigCard2{ 
+.bigCard2{ 
     height: 298px; 
     width: 384px;
 }
-.hrContracts{ margin-top: 24px; }
+.contracts{ margin-top: 24px; }
 
-.hrGrid2Bottom{
+.grid2Bottom{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px;
 }
-.hrMidCard{ height: 184px; }
+.midCard{ height: 184px; }
+.midCard2{ width: 920px; height: 184px; }
 
 /* Responsive */
 @media (max-width: 1200px){
-  .hrStats{ grid-template-columns: repeat(3, 1fr); }
+  .stats{ grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 980px){
-  .hrSidebar{ width: 240px; }
-  .hrGrid2{ grid-template-columns: 1fr; }
-  .hrStats{ grid-template-columns: repeat(2, 1fr); }
+  .sidebar{ width: 240px; }
+  .grid2{ grid-template-columns: 1fr; }
+  .stats{ grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px){
-  .hrSidebar{ display: none; }
-  .hrSearch{ width: 180px; }
-  .hrGrid2Bottom{ grid-template-columns: 1fr; }
+  .sidebar{ display: none; }
+  .search{ width: 180px; }
+  .grid2Bottom{ grid-template-columns: 1fr; }
 }

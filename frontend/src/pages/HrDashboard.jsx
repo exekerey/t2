@@ -1,4 +1,6 @@
-import "./HrDashboard.css";
+import "./Dashboard.css";
+import DashboardSidebar from "../components/Sidebar";
+import DashboardTopbar from "../components/Topbar";
 import DashboardIcon from "../assets/icons/icon.svg?react";
 import SuppliersIcon from "../assets/icons/dom.svg?react";
 import ContractsIcon from "../assets/icons/file.svg?react";
@@ -12,6 +14,7 @@ import LogoutIcon from "../assets/icons/logout.svg?react";
 import BellIcon from "../assets/icons/notification.svg?react";
 import UserIcon from "../assets/icons/user.svg?react";
 import SearchIcon from "../assets/icons/search.svg?react";
+
 const navItems = [
   { label: "Dashboard", icon: DashboardIcon },
   { label: "Поставщики", icon: SuppliersIcon },
@@ -23,118 +26,58 @@ const navItems = [
 
 export default function HrDashboard() {
   return (
-    <div className="hrLayout">
-      {/* SIDEBAR */}
-      <aside className="hrSidebar">
-        <div className="hrBrand">
-          <div className="hrLogo" />
-          <div className="hrBrandText">VirtualSchool</div>
-        </div>
-        <div className="hrDivider" />
+    <div className="layout">
+      <DashboardSidebar
+        brandText="VirtualSchool"
+        userName="Айгерим Маратова"
+        userRole="HR-менеджер"
+        navItems={navItems}
+        activeIndex={0}
+        SettingsIcon={SettingsIcon}
+        LogoutIcon={LogoutIcon}
+      />
 
-        <div className="hrProfile">
-          <div className="hrAvatar" />
-          <div className="hrProfileText">
-            <div className="hrName">Айгерим Маратова</div>
-            <div className="hrRole">HR-менеджер</div>
-          </div>
-        </div>
+      <main className="main">
+        <DashboardTopbar
+          title="Dashboard"
+          SearchIcon={SearchIcon}
+          BellIcon={BellIcon}
+          UserIcon={UserIcon}
+          searchPlaceholder="Поиск..."
+        />
 
-        {/* NAVIGATION */}
-        <nav className="hrNav">
-        {navItems.map((item, index) => {
-            const IconComponent = item.icon;
-
-            return (
-            <button
-                key={index}
-                className={`hrNavItem ${index === 0 ? "active" : ""}`}
-            >
-                <span className="hrNavIcon">
-                <IconComponent />
-                </span>
-                <span>{item.label}</span>
-            </button>
-            );
-        })}
-        </nav>
-
-        {/* BOTTOM */}
-        <div className="hrSidebarBottom">
-            <button className="hrBottomItem">
-            <span className="hrNavIcon">
-                <SettingsIcon />
-            </span>
-            Настройки
-            </button>
-
-            <button className="hrBottomItem">
-            <span className="hrNavIcon">
-                <LogoutIcon />
-            </span>
-            Выйти
-            </button>
-        </div>
-      </aside>
-
-      {/* MAIN */}
-      <main className="hrMain">
-        {/* TOP BAR */}
-        <div className="hrTopbar">
-          <h1 className="hrTitle">Dashboard</h1>
-
-          <div className="hrTopRight">
-            <div className="hrSearch">
-                <span className="hrSearchIcon" aria-hidden="true">
-                    <SearchIcon />
-                </span>
-            <input placeholder="Поиск..." />
-            </div>
-            <button className="hrIconBtn">
-                <BellIcon />
-            </button>
-
-            <button className="hrIconBtn">
-                <UserIcon />
-            </button>
-          </div>
-        </div>
-
-        {/* 5 STAT CARDS */}
-        <div className="hrStats">
+        <div className="stats">
           {Array.from({ length: 5 }).map((_, idx) => (
-            <div key={idx} className="hrCard hrStatCard" />
+            <div key={idx} className="card statCard" />
           ))}
         </div>
 
-        {/* ROW: Requests + Activity */}
-        <div className="hrGrid2">
+        <div className="grid2">
           <section>
-            <div className="hrSectionHeader">
+            <div className="sectionHeader">
               <h2>Последние заявки</h2>
-              <button className="hrLinkBtn">Все заявки</button>
+              <button className="linkBtn">Все заявки</button>
             </div>
-            <div className="hrCard hrBigCard" />
+            <div className="card bigCard" />
           </section>
 
           <section>
-            <div className="hrSectionHeader">
+            <div className="sectionHeader">
               <h2>Активность</h2>
             </div>
-            <div className="hrCard hrBigCard2" />
+            <div className="card bigCard2" />
           </section>
         </div>
 
-        {/* Contracts */}
-        <section className="hrContracts">
-          <div className="hrSectionHeader">
+        <section className="contracts">
+          <div className="sectionHeader">
             <h2>Договоры - освоение бюджета</h2>
-            <button className="hrLinkBtn">Все договоры</button>
+            <button className="linkBtn">Все договоры</button>
           </div>
 
-          <div className="hrGrid2Bottom">
-            <div className="hrCard hrMidCard" />
-            <div className="hrCard hrMidCard" />
+          <div className="grid2Bottom">
+            <div className="card midCard" />
+            <div className="card midCard2" />
           </div>
         </section>
       </main>
