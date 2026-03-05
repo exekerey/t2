@@ -22,7 +22,7 @@ class TrainingRequestParticipant(TrainingRequestParticipantBase):
     certificate_number: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Request Schemas

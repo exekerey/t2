@@ -49,7 +49,7 @@ class CRUDEmployee(CRUDBase[Employee, EmployeeCreate, EmployeeUpdate]):
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
-            update_data = obj_in.dict(exclude_unset=True)
+            update_data = obj_in.model_dump(exclude_unset=True, mode='json')
             
         if "password" in update_data and update_data["password"]:
             hashed_password = get_password_hash(update_data["password"])
