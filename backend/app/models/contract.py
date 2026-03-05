@@ -16,7 +16,7 @@ class Contract(TimestampedBase):
     supplier_id = Column(UUID(as_uuid=True), ForeignKey("suppliers.id"), nullable=False)
     supplier = relationship("Supplier", back_populates="contracts")
 
-    spends = relationship("ContractSpend", back_populates="contract")
-    training_requests = relationship("TrainingRequest", back_populates="contract")
+    spends = relationship("ContractSpend", back_populates="contract", cascade="all, delete-orphan")
+    training_requests = relationship("TrainingRequest", back_populates="contract", cascade="all, delete-orphan")
 
     __table_args__ = (UniqueConstraint('number', 'supplier_id', name='_supplier_contract_number_uc'),)

@@ -1,9 +1,10 @@
+import { NavLink } from "react-router-dom";
+
 export default function DashboardSidebar({
   brandText = "VirtualSchool",
   userName,
   userRole,
   navItems,
-  activeIndex = 0,
   SettingsIcon,
   LogoutIcon,
 }) {
@@ -25,19 +26,23 @@ export default function DashboardSidebar({
       </div>
 
       <nav className="nav">
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           const IconComponent = item.icon;
+
           return (
-            <button
+            <NavLink
               key={item.label}
-              className={`navItem ${index === activeIndex ? "active" : ""}`}
-              type="button"
+              to={item.to}
+              end={item.end} 
+              className={({ isActive }) =>
+                `navItem ${isActive ? "active" : ""}`
+              }
             >
               <span className="navIcon">
                 <IconComponent />
               </span>
               <span>{item.label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>

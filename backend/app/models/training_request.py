@@ -21,8 +21,8 @@ class TrainingRequest(TimestampedBase):
     manager = relationship("Employee", back_populates="managed_requests")
     contract = relationship("Contract", back_populates="training_requests")
     
-    participants = relationship("TrainingRequestParticipant", back_populates="request")
-    spends = relationship("ContractSpend", back_populates="request")
+    participants = relationship("TrainingRequestParticipant", back_populates="request", cascade="all, delete-orphan")
+    spends = relationship("ContractSpend", back_populates="request", cascade="all, delete-orphan")
 
     @property
     def participant_count(self) -> int:

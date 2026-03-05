@@ -8,5 +8,5 @@ class Supplier(TimestampedBase):
     bin = Column(String, nullable=False, unique=True)
     contacts = Column(JSON)  # {email, phone_number, website}
     
-    contracts = relationship("Contract", back_populates="supplier")
-    trainings = relationship("Training", back_populates="supplier")
+    contracts = relationship("Contract", back_populates="supplier", cascade="all, delete-orphan")
+    trainings = relationship("Training", back_populates="supplier", cascade="all, delete-orphan")

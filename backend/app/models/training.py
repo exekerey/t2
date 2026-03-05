@@ -19,5 +19,5 @@ class Training(TimestampedBase):
     
     supplier_id = Column(UUID(as_uuid=True), ForeignKey("suppliers.id"), nullable=False)
     supplier = relationship("Supplier", back_populates="trainings")
-    
-    requests = relationship("TrainingRequest", back_populates="training")
+
+    requests = relationship("TrainingRequest", back_populates="training", cascade="all, delete-orphan")

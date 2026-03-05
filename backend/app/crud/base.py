@@ -20,7 +20,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return db.query(self.model).offset(skip).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = dict(obj_in)
+        obj_in_data = obj_in.model_dump(mode='json')
         db_obj = self.model(**obj_in_data)
         db.add(db_obj)
         db.commit()
@@ -37,7 +37,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
-            update_data = obj_in.dict(exclude_unset=True)
+            update_data = obj_in.model_dump(exclude_unset=True, mode='json')
         
         for field in update_data:
             if hasattr(db_obj, field):
