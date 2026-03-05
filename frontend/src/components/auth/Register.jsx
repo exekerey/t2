@@ -163,7 +163,7 @@ export default function Register() {
             <div className="brand">
               <div className="brandLogo">VS</div>
               <div className="brandText">
-                <div className="brandName">VirtualSchool</div>
+                <div className="brandName">Nexus</div>
                 <div className="brandSub">CORPORATE LEARNING</div>
               </div>
             </div>

@@ -28,7 +28,7 @@ export default function HrDashboard() {
   return (
     <div className="layout">
       <DashboardSidebar
-        brandText="VirtualSchool"
+        brandText="Nexus"
         userName="Айгерим Маратова"
         userRole="HR-менеджер"
         navItems={navItems}
