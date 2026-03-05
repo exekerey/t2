@@ -29,7 +29,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     refreshMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = useMemo(
@@ -37,23 +36,22 @@ export function AuthProvider({ children }) {
       me,
       loading,
       isAuthed: !!me,
-
       login: async (creds) => {
-        setLoading(true);
+      setLoading(true);
+      try {
         await auth.login(creds);
         const profile = await auth.me();
         setMe(profile);
-        setLoading(false);
         return profile;
-      },
-
+      } finally {
+        setLoading(false);
+      }
+    },
       register: auth.register,
-
       logout: () => {
         auth.logout();
         setMe(null);
       },
-
       refreshMe,
     }),
     [me, loading]
