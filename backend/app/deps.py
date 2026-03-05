@@ -64,3 +64,16 @@ def get_current_active_manager_user(
         )
     return current_user
 
+
+def get_current_active_hr_or_manager_user(
+    current_user: models.Employee = Depends(get_current_active_user),
+) -> models.Employee:
+    if current_user.role not in (
+        schemas.enums.EmployeeRole.HR,
+        schemas.enums.EmployeeRole.MANAGER,
+    ):
+        raise HTTPException(
+            status_code=403, detail="The user doesn't have enough privileges"
+        )
+    return current_user
+

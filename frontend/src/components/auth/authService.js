@@ -1,6 +1,6 @@
-import api from "../../api/api"
+import api from "../../api/api";
 
-// Login (form-urlencoded)
+// OAuth2 login (form-urlencoded)
 export async function login({ username, password }) {
   const body = new URLSearchParams();
   body.set("username", username);
@@ -12,19 +12,25 @@ export async function login({ username, password }) {
 
   localStorage.setItem("access_token", data.access_token);
   localStorage.setItem("token_type", data.token_type);
-
-  return data; // { access_token, token_type }
-}
-
-export async function register(payload) {
-  const { data } = await api.post("/auth/register", payload);
   return data;
 }
 
-// Me (Bearer required)
+export async function register(payload) {
+  const body = {
+    full_name: payload.full_name,
+    email: payload.email,
+    password: payload.password,
+    role: payload.role,
+    department_id: payload.department_id ?? null,
+  };
+
+  const { data } = await api.post("/auth/register", body);
+  return data;
+}
+
 export async function me() {
   const { data } = await api.get("/auth/me");
-  return data; 
+  return data;
 }
 
 export function logout() {

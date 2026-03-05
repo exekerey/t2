@@ -1,15 +1,24 @@
-// import { useState } from 'react'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+
+import HrDashboard from "./pages/HrDashboard";
+import ManagerDashboard from "./pages/ManagerDashboard";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+
+import LogIn from "./components/auth/LogIn";
+import Register from "./components/auth/Register";
+import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import RoleRoute from "./components/auth/RoleRoute";
+
 
 function App() {
   
   return (
     <>
       <Routes>
-      <Route path="/" element={<Landing />} />
+      
 
       <Route element={<PublicOnlyRoute />}>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
       </Route>
 
@@ -25,7 +34,7 @@ function App() {
         <Route path="/employee" element={<EmployeeDashboard />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+   
     </Routes>
     </>
   )
