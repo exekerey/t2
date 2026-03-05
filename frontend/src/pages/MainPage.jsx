@@ -1,5 +1,6 @@
 import "./MainPage.css";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Logo from "../assets/logo.svg?react";
 
@@ -154,12 +155,12 @@ export default function MainPage() {
           </nav>
 
           <div className="vsHeader-actions">
-            <button className="vsLoginButton" type="button">
+            <Link to="/login" className="vsLoginButton">
               Войти
-            </button>
-            <a href="#cta" className="vsStartButton">
+            </Link>
+            <Link to="/register" className="vsStartButton">
               Начать <span className="vsStartButton-arrow">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
