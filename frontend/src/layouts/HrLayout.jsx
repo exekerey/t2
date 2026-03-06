@@ -4,6 +4,8 @@ import "../Dashboard.css";
 import DashboardSidebar from "../components/Sidebar";
 import DashboardTopbar from "../components/Topbar";
 
+import Logo from "../assets/logo.svg?react";
+
 import DashboardIcon from "../assets/icons/icon.svg?react";
 import SuppliersIcon from "../assets/icons/dom.svg?react";
 import ContractsIcon from "../assets/icons/file.svg?react";
@@ -42,7 +44,8 @@ export default function HrLayout() {
   return (
     <div className="layout">
       <DashboardSidebar
-        brandText="VirtualSchool"
+        brandText="Nexus"
+        Logo={Logo}
         userName="Айгерим Маратова"
         userRole="HR-менеджер"
         navItems={navItems}

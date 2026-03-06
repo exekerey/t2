@@ -773,3 +773,39 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+.page {
+  padding: 20px;
+}
+
+.loading {
+  padding: 20px;
+}
+
+.error {
+  padding: 20px;
+  color: red;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  background-color: #f5f5f5;
+}
+
+.table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.empty {
+  opacity: 0.7;
+}
+

@@ -4,7 +4,7 @@ import { useAuth } from "../auth/useAuth";
 import "./Login.css";
 
 function roleToHome(role) {
-  if (role === "HR") return "/";
+  if (role === "HR") return "/hr";
   if (role === "MANAGER") return "/manager";
   return "/employee";
 }

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createTraining, fetchTrainings, updateTraining } from "../../api/trainings";
 
-
 function toLocalDatetimeInputValue(iso) {
   if (!iso) return "";
   return iso.slice(0, 16);
@@ -19,18 +18,31 @@ export default function HrTraining() {
   // create form
   const [form, setForm] = useState({
     title: "",
-    type: "seminar", // seminar | course | workshop
+    type: "seminar",
     trainer_name: "",
     date_start: "",
     date_end: "",
     location: "",
-    pricing_model: "per_person", // per_person | per_group
+    pricing_model: "per_person",
     price_amount: 0,
     capacity: 0,
     supplier_id: "",
   });
 
+  // edit states
   const [editId, setEditId] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [editForm, setEditForm] = useState({
+    title: "",
+    type: "seminar",
+    trainer_name: "",
+    date_start: "",
+    date_end: "",
+    location: "",
+    pricing_model: "per_person",
+    price_amount: 0,
+    capacity: 0,
+  });
 
   const canSubmit = useMemo(() => {
     return (
@@ -42,6 +54,16 @@ export default function HrTraining() {
       form.supplier_id.trim()
     );
   }, [form]);
+
+  const canSaveEdit = useMemo(() => {
+    return (
+      editForm.title.trim() &&
+      editForm.trainer_name.trim() &&
+      editForm.date_start &&
+      editForm.date_end &&
+      editForm.location.trim()
+    );
+  }, [editForm]);
 
   async function load() {
     try {
@@ -58,7 +80,6 @@ export default function HrTraining() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip]);
 
   async function onCreate() {
@@ -98,14 +119,66 @@ export default function HrTraining() {
     }
   }
 
+  function onEdit(training) {
+    setEditId(training.id);
+    setEditForm({
+      title: training.title || "",
+      type: training.type || "seminar",
+      trainer_name: training.trainer_name || "",
+      date_start: toLocalDatetimeInputValue(training.date_start),
+      date_end: toLocalDatetimeInputValue(training.date_end),
+      location: training.location || "",
+      pricing_model: training.pricing_model || "per_person",
+      price_amount: training.price_amount ?? 0,
+      capacity: training.capacity ?? 0,
+    });
+  }
+
+  function onCancelEdit() {
+    setEditId(null);
+    setEditForm({
+      title: "",
+      type: "seminar",
+      trainer_name: "",
+      date_start: "",
+      date_end: "",
+      location: "",
+      pricing_model: "per_person",
+      price_amount: 0,
+      capacity: 0,
+    });
+  }
+
+  async function onSaveEdit(id) {
+    try {
+      setErr("");
+      setSaving(true);
+
+      const payload = {
+        title: editForm.title,
+        type: editForm.type,
+        trainer_name: editForm.trainer_name,
+        date_start: editForm.date_start,
+        date_end: editForm.date_end,
+        location: editForm.location,
+        pricing_model: editForm.pricing_model,
+        price_amount: Number(editForm.price_amount) || 0,
+        capacity: Number(editForm.capacity) || 0,
+      };
+
+      await updateTraining(id, payload);
+      onCancelEdit();
+      await load();
+    } catch (e) {
+      setErr(e.message || "Save failed");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <div className="hr-page">
       <div className="hr-header">
-        {/* <div>
-          <h1 className="hr-title">Тренинги</h1>
-          <div className="hr-subtitle">Управление тренингами (создание и список)</div>
-        </div> */}
-
         <div className="hr-actions">
           <button
             className="btn btn-ghost"
@@ -120,7 +193,6 @@ export default function HrTraining() {
         </div>
       </div>
 
-      {/* Create card */}
       <div className="card">
         <div className="card-title">Создать тренинг</div>
 
@@ -219,16 +291,6 @@ export default function HrTraining() {
               onChange={(e) => setForm((p) => ({ ...p, capacity: e.target.value }))}
             />
           </div>
-
-          <div className="field span-3">
-            <div className="label">Supplier ID</div>
-            <input
-              className="input mono"
-              value={form.supplier_id}
-              onChange={(e) => setForm((p) => ({ ...p, supplier_id: e.target.value }))}
-              placeholder="UUID поставщика"
-            />
-          </div>
         </div>
 
         <div className="row">
@@ -244,11 +306,9 @@ export default function HrTraining() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="card">
         <div className="card-head">
           <div className="card-title">Список тренингов</div>
-          <div className="muted">skip={skip}, limit={limit}</div>
         </div>
 
         <div className="tableWrap">
@@ -266,7 +326,6 @@ export default function HrTraining() {
                   <th>Location</th>
                   <th>Price</th>
                   <th>Capacity</th>
-                  <th>Supplier</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -274,45 +333,199 @@ export default function HrTraining() {
               <tbody>
                 {items.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="empty">
+                    <td colSpan={9} className="empty">
                       Пока нет тренингов
                     </td>
                   </tr>
                 ) : (
-                  items.map((t) => (
-                    <tr key={t.id}>
-                      <td className="strong">{t.title}</td>
-                      <td>{t.type}</td>
-                      <td>{t.trainer_name}</td>
-                      <td className="nowrap">{toLocalDatetimeInputValue(t.date_start)}</td>
-                      <td className="nowrap">{toLocalDatetimeInputValue(t.date_end)}</td>
-                      <td>{t.location}</td>
-                      <td>
-                        {t.pricing_model} · {t.price_amount}
-                      </td>
-                      <td>{t.capacity}</td>
-                      <td className="mono small">{t.supplier_id}</td>
-                      <td>
-                        <div className="btnGroup">
-                          <button
-                            className="btn btn-ghost btn-sm"
-                            onClick={() => onQuickUpdateType(t.id, "seminar")}
-                          >
-                            set seminar
-                          </button>
-                          <button
-                            className="btn btn-dark btn-sm"
-                            onClick={() => {
-                              setEditId(t.id);
-                              alert("Редактирование можно сделать модалкой (позже добавим)");
-                            }}
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
+                  items.map((t) => {
+                    const isEditing = editId === t.id;
+
+                    return (
+                      <tr key={t.id}>
+                        <td className="strong">
+                          {isEditing ? (
+                            <input
+                              className="input"
+                              value={editForm.title}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, title: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            t.title
+                          )}
+                        </td>
+
+                        <td>
+                          {isEditing ? (
+                            <select
+                              className="input"
+                              value={editForm.type}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, type: e.target.value }))
+                              }
+                            >
+                              <option value="seminar">seminar</option>
+                              <option value="course">course</option>
+                              <option value="workshop">workshop</option>
+                            </select>
+                          ) : (
+                            t.type
+                          )}
+                        </td>
+
+                        <td>
+                          {isEditing ? (
+                            <input
+                              className="input"
+                              value={editForm.trainer_name}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, trainer_name: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            t.trainer_name
+                          )}
+                        </td>
+
+                        <td className="nowrap">
+                          {isEditing ? (
+                            <input
+                              type="datetime-local"
+                              className="input"
+                              value={editForm.date_start}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, date_start: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            toLocalDatetimeInputValue(t.date_start)
+                          )}
+                        </td>
+
+                        <td className="nowrap">
+                          {isEditing ? (
+                            <input
+                              type="datetime-local"
+                              className="input"
+                              value={editForm.date_end}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, date_end: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            toLocalDatetimeInputValue(t.date_end)
+                          )}
+                        </td>
+
+                        <td>
+                          {isEditing ? (
+                            <input
+                              className="input"
+                              value={editForm.location}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, location: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            t.location
+                          )}
+                        </td>
+
+                        <td>
+                          {isEditing ? (
+                            <div style={{ display: "flex", gap: 8 }}>
+                              <select
+                                className="input"
+                                value={editForm.pricing_model}
+                                onChange={(e) =>
+                                  setEditForm((p) => ({
+                                    ...p,
+                                    pricing_model: e.target.value,
+                                  }))
+                                }
+                              >
+                                <option value="per_person">per_person</option>
+                                <option value="per_group">per_group</option>
+                              </select>
+
+                              <input
+                                type="number"
+                                className="input"
+                                value={editForm.price_amount}
+                                onChange={(e) =>
+                                  setEditForm((p) => ({
+                                    ...p,
+                                    price_amount: e.target.value,
+                                  }))
+                                }
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              {t.pricing_model} · {t.price_amount}
+                            </>
+                          )}
+                        </td>
+
+                        <td>
+                          {isEditing ? (
+                            <input
+                              type="number"
+                              className="input"
+                              value={editForm.capacity}
+                              onChange={(e) =>
+                                setEditForm((p) => ({ ...p, capacity: e.target.value }))
+                              }
+                            />
+                          ) : (
+                            t.capacity
+                          )}
+                        </td>
+
+                        <td>
+                          <div className="btnGroup">
+                            {isEditing ? (
+                              <>
+                                <button
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => onSaveEdit(t.id)}
+                                  disabled={!canSaveEdit || saving}
+                                >
+                                  {saving ? "Saving..." : "Save"}
+                                </button>
+
+                                <button
+                                  className="btn btn-ghost btn-sm"
+                                  onClick={onCancelEdit}
+                                  disabled={saving}
+                                >
+                                  Cancel
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  className="btn btn-ghost btn-sm"
+                                  onClick={() => onQuickUpdateType(t.id, "seminar")}
+                                >
+                                  set seminar
+                                </button>
+
+                                <button
+                                  className="btn btn-dark btn-sm"
+                                  onClick={() => onEdit(t)}
+                                >
+                                  Edit
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

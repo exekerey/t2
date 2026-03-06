@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function DashboardSidebar({
   brandText = "Nexus",
@@ -8,6 +8,19 @@ export default function DashboardSidebar({
   SettingsIcon,
   LogoutIcon,
 }) {
+
+  const navigate = useNavigate();
+
+  function handleLogout() {
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    localStorage.removeItem("user");
+
+    navigate("/");
+  }
+
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -33,7 +46,7 @@ export default function DashboardSidebar({
             <NavLink
               key={item.label}
               to={item.to}
-              end={item.end} 
+              end={item.end}
               className={({ isActive }) =>
                 `navItem ${isActive ? "active" : ""}`
               }
@@ -55,7 +68,11 @@ export default function DashboardSidebar({
           Настройки
         </button>
 
-        <button className="bottomItem" type="button">
+        <button
+          className="bottomItem"
+          type="button"
+          onClick={handleLogout}
+        >
           <span className="navIcon">
             <LogoutIcon />
           </span>

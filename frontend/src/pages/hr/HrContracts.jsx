@@ -7,7 +7,7 @@ export default function HrContracts() {
   const [err, setErr] = useState("");
 
   const [status, setStatus] = useState(""); // "", "active", "expired", "closed"
-  const [supplierId, setSupplierId] = useState("");
+
 
   async function load() {
     try {
@@ -15,7 +15,6 @@ export default function HrContracts() {
       setErr("");
       const data = await fetchContracts({
         status: status || undefined,
-        supplier_id: supplierId.trim() || undefined,
         skip: 0,
         limit: 100,
       });
@@ -45,16 +44,6 @@ export default function HrContracts() {
             </select>
           </label>
 
-          <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            supplier_id:
-            <input
-              value={supplierId}
-              onChange={(e) => setSupplierId(e.target.value)}
-              placeholder="UUID поставщика"
-              style={{ minWidth: 280 }}
-            />
-          </label>
-
           <button className="linkBtn" onClick={load}>
             Применить
           </button>
@@ -73,7 +62,6 @@ export default function HrContracts() {
                   <th>Date end</th>
                   <th>Budget limit</th>
                   <th>Status</th>
-                  <th>Supplier ID</th>
                 </tr>
               </thead>
               <tbody>
@@ -91,7 +79,6 @@ export default function HrContracts() {
                       <td>{c.date_end}</td>
                       <td>{c.budget_limit}</td>
                       <td>{c.status}</td>
-                      <td style={{ fontFamily: "monospace" }}>{c.supplier_id}</td>
                     </tr>
                   ))
                 )}
