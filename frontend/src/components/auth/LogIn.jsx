@@ -28,7 +28,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const profile = await login(form); // expects {username, password}
+      const profile = await login(form); 
       navigate(roleToHome(profile.role), { replace: true });
     } catch (err) {
       setError(

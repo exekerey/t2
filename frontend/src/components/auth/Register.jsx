@@ -158,7 +158,7 @@ export default function Register() {
     <div className="authPage">
       <div className="authFrame">
         <div className="authShell">
-          {/* LEFT PROMO PANEL */}
+          {/* LEFT PANEL */}
           <aside className="authLeft">
             <div className="brand">
               <div className="brandLogo">VS</div>
@@ -211,14 +211,14 @@ export default function Register() {
             <div className="leftFooter" />
           </aside>
 
-          {/* RIGHT FORM PANEL */}
+          {/* RIGHT PANEL */}
           <main className="authRight">
             <div className="authCard">
               <header className="authHeader">
                 <h2 className="authTitle">Регистрация</h2>
                 <p className="authSubtitle">Заполните данные для создания аккаунта</p>
 
-                {/* STEPPER (like screenshot) */}
+                {/* STEPPER */}
                 <div className="stepper">
                   <div className={`step ${step === 1 ? "current" : step > 1 ? "done" : ""}`}>
                     <span className="stepBadge">
@@ -287,7 +287,7 @@ export default function Register() {
                       </button>
                     </div>
 
-                    {/* KEEP YOUR SELECT (unchanged element) */}
+                    {/* KEEP YOUR SELECT  */}
                     <div className="field">
                       <label className="label">Роль (select)</label>
                       <select
@@ -321,7 +321,7 @@ export default function Register() {
                   </>
                 )}
 
-                {/* STEP 2: DATA (Имя/Фамилия + Department dropdown, NO должность) */}
+                {/* STEP 2: DATA */}
                 {step === 2 && (
                   <>
                     <div className="grid2">
@@ -404,7 +404,7 @@ export default function Register() {
                   </>
                 )}
 
-                {/* STEP 3: ACCESS (Email + Password + Confirm password + submit) */}
+                {/* STEP 3: ACCESS */}
                 {step === 3 && (
                   <>
                     <div className="field">
