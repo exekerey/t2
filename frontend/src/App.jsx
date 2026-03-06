@@ -11,23 +11,47 @@ import HrRequests from "./pages/hr/HrRequests";
 
 import ManagerDashboard from "./pages/ManagerDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
+import MainPage from "./pages/MainPage";
 
-export default function App() {
+import LogIn from "./components/auth/LogIn";
+import Register from "./components/auth/Register";
+import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import RoleRoute from "./components/auth/RoleRoute";
+
+
+function App() {
+
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/hr" replace />} />
+    <>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
 
-      <Route path="/hr" element={<HrLayout />}>
-        <Route index element={<HrDashboardHome />} />
-        <Route path="suppliers" element={<HrSuppliers />} />
-        <Route path="contracts" element={<HrContracts />} />
-        <Route path="trainings" element={<HrTrainings />} />
-        <Route path="listeners" element={<HrListeners />} />
-        <Route path="requests" element={<HrRequests />} />
-      </Route>
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
-      <Route path="/manager" element={<ManagerDashboard />} />
-      <Route path="/employee" element={<EmployeeDashboard />} />
-    </Routes>
-  );
+        <Route element={<RoleRoute allowRoles={["HR"]} />}>
+          <Route path="/hr" element={<HrLayout />}>
+            <Route index element={<HrDashboardHome />} />
+            <Route path="suppliers" element={<HrSuppliers />} />
+            <Route path="contracts" element={<HrContracts />} />
+            <Route path="trainings" element={<HrTrainings />} />
+            <Route path="listeners" element={<HrListeners />} />
+            <Route path="requests" element={<HrRequests />} />
+          </Route>
+        </Route>
+
+        <Route element={<RoleRoute allowRoles={["MANAGER"]} />}>
+          <Route path="/manager" element={<ManagerDashboard />} />
+        </Route>
+
+        <Route element={<RoleRoute allowRoles={["EMPLOYEE"]} />}>
+          <Route path="/employee" element={<EmployeeDashboard />} />
+        </Route>
+      </Routes>
+    </>
+  )
 }
+
+export default App

@@ -1,11 +1,11 @@
-import "../Dashboard.css";
-
+import "./Dashboard.css";
 import DashboardSidebar from "../components/Sidebar";
 import DashboardTopbar from "../components/Topbar";
-
 import DashboardIcon from "../assets/icons/icon.svg?react";
-import TimeIcon from "../assets/icons/time2.svg?react";
-import CatalogIcon from "../assets/icons/catalog.svg?react";
+import SuppliersIcon from "../assets/icons/dom.svg?react";
+import ContractsIcon from "../assets/icons/file.svg?react";
+import TrainingsIcon from "../assets/icons/tvv.svg?react";
+import ListenersIcon from "../assets/icons/listeners.svg?react";
 import RequestsIcon from "../assets/icons/check.svg?react";
 
 import SettingsIcon from "../assets/icons/settings.svg?react";
@@ -17,18 +17,20 @@ import SearchIcon from "../assets/icons/search.svg?react";
 
 const navItems = [
   { label: "Dashboard", icon: DashboardIcon },
-  { label: "Каталог", icon: CatalogIcon },
-  { label: "Подать заявку", icon: TimeIcon },
+  { label: "Поставщики", icon: SuppliersIcon },
+  { label: "Договоры", icon: ContractsIcon },
+  { label: "Тренинги", icon: TrainingsIcon },
+  { label: "Слушатели", icon: ListenersIcon },
   { label: "Заявки", icon: RequestsIcon },
 ];
 
-export default function ManagerDashboard() {
+export default function HrDashboard() {
   return (
     <div className="layout">
       <DashboardSidebar
         brandText="Nexus"
-        userName="Айгерым Маратова"          
-        userRole="Начальник цеха №3"           
+        userName="Айгерим Маратова"
+        userRole="HR-менеджер"
         navItems={navItems}
         activeIndex={0}
         SettingsIcon={SettingsIcon}
@@ -37,7 +39,7 @@ export default function ManagerDashboard() {
 
       <main className="main">
         <DashboardTopbar
-          title="Dashboard"          
+          title="Dashboard"
           SearchIcon={SearchIcon}
           BellIcon={BellIcon}
           UserIcon={UserIcon}
@@ -45,7 +47,7 @@ export default function ManagerDashboard() {
         />
 
         <div className="stats">
-          {Array.from({ length: 3 }).map((_, idx) => (
+          {Array.from({ length: 5 }).map((_, idx) => (
             <div key={idx} className="card statCard" />
           ))}
         </div>
@@ -53,7 +55,7 @@ export default function ManagerDashboard() {
         <div className="grid2">
           <section>
             <div className="sectionHeader">
-              <h2>Мои заявки</h2>
+              <h2>Последние заявки</h2>
               <button className="linkBtn">Все заявки</button>
             </div>
             <div className="card bigCard" />
@@ -61,7 +63,7 @@ export default function ManagerDashboard() {
 
           <section>
             <div className="sectionHeader">
-              <h2>Истикают сертификаты</h2>
+              <h2>Активность</h2>
             </div>
             <div className="card bigCard2" />
           </section>
@@ -69,11 +71,13 @@ export default function ManagerDashboard() {
 
         <section className="contracts">
           <div className="sectionHeader">
-            <h2>Прогресс обучения</h2>
+            <h2>Договоры - освоение бюджета</h2>
+            <button className="linkBtn">Все договоры</button>
           </div>
 
           <div className="grid2Bottom">
             <div className="card midCard" />
+            <div className="card midCard2" />
           </div>
         </section>
       </main>

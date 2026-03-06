@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 export default function DashboardSidebar({
-  brandText = "VirtualSchool",
+  brandText = "Nexus",
   userName,
   userRole,
   navItems,
