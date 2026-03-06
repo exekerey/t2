@@ -26,7 +26,7 @@ export default function ManagerDashboard() {
   return (
     <div className="layout">
       <DashboardSidebar
-        brandText="VirtualSchool"
+        brandText="Nexus"
         userName="Айгерым Маратова"          
         userRole="Начальник цеха №3"           
         navItems={navItems}

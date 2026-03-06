@@ -1,5 +1,5 @@
 export default function DashboardSidebar({
-  brandText = "VirtualSchool",
+  brandText = "Nexus",
   userName,
   userRole,
   navItems,

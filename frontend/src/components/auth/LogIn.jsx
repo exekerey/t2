@@ -52,7 +52,7 @@ export default function Login() {
                 <span className="vsBadge">VS</span>
               </div>
               <div className="loginBrandText">
-                <div className="loginBrandName">VirtualSchool</div>
+                <div className="loginBrandName">Nexus</div>
                 <div className="loginBrandSub">CORPORATE LEARNING</div>
               </div>
             </div>
