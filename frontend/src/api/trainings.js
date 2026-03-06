@@ -1,7 +1,7 @@
 const API_URL = "http://localhost:8000";
 
 function getToken() {
-  return localStorage.getItem("token"); // где ты сохраняешь access_token
+  return localStorage.getItem("access_token");
 }
 
 function authHeaders() {
