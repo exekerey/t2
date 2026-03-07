@@ -42,9 +42,11 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<RoleRoute allowRoles={["MANAGER"]} />}>
+        {/*<Route element={<RoleRoute allowRoles={["MANAGER"]} />}>
           <Route path="/manager" element={<ManagerDashboard />} />
-        </Route>
+        </Route>*/}
+
+        <Route path="/manager" element={<ManagerDashboard />} />
 
         <Route element={<RoleRoute allowRoles={["EMPLOYEE"]} />}>
           <Route path="/employee" element={<EmployeeDashboard />} />
