@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api import auth, contracts, departments, employees, requests, suppliers, trainings
+from app.api import auth, contracts, departments, employees, requests, suppliers, trainings, attendance
 
 api_router = APIRouter()
 api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
@@ -10,3 +10,4 @@ api_router.include_router(employees.router, prefix="/employees", tags=["employee
 api_router.include_router(requests.router, prefix="/requests", tags=["requests"])
 api_router.include_router(suppliers.router, prefix="/suppliers", tags=["suppliers"])
 api_router.include_router(trainings.router, prefix="/trainings", tags=["trainings"])
+api_router.include_router(attendance.router, tags=["attendance & certificates"])
