@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: t2_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: t2
+    ports:
+      - "5432:5432"
+    volumes:
+      - t2_pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: t2_api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+volumes:
+  t2_pgdata:
