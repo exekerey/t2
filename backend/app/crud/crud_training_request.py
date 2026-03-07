@@ -155,7 +155,15 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         query = db.query(self.model).filter(self.model.manager_id == manager_id)
         if status:
             query = query.filter(self.model.status == status)
-        return query.offset(skip).limit(limit).all()
+        return (
+            query.options(
+                joinedload(self.model.training),
+                joinedload(self.model.participants).joinedload(TrainingRequestParticipant.employee)
+            )
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
     def get_inbox(
         self,
@@ -169,7 +177,15 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         query = db.query(self.model).filter(self.model.status == TrainingRequestStatus.SUBMITTED)
         if status:
             query = query.filter(self.model.status == status)
-        return query.offset(skip).limit(limit).all()
+        return (
+            query.options(
+                joinedload(self.model.training),
+                joinedload(self.model.participants).joinedload(TrainingRequestParticipant.employee)
+            )
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
     def get_multi_with_filter(
         self,
@@ -182,7 +198,15 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         query = db.query(self.model)
         if status:
             query = query.filter(self.model.status == status)
-        return query.offset(skip).limit(limit).all()
+        return (
+            query.options(
+                joinedload(self.model.training),
+                joinedload(self.model.participants).joinedload(TrainingRequestParticipant.employee)
+            )
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
 
 training_request = CRUDTrainingRequest(TrainingRequest)

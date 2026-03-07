@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = ""; // Relative path to use Vite proxy
 
 function authHeaders() {
   const token = localStorage.getItem("access_token");

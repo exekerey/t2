@@ -18,7 +18,7 @@ export default function HrTraining() {
   // create form
   const [form, setForm] = useState({
     title: "",
-    type: "seminar",
+    type: "SEMINAR",
     trainer_name: "",
     date_start: "",
     date_end: "",
@@ -34,7 +34,7 @@ export default function HrTraining() {
   const [saving, setSaving] = useState(false);
   const [editForm, setEditForm] = useState({
     title: "",
-    type: "seminar",
+    type: "SEMINAR",
     trainer_name: "",
     date_start: "",
     date_end: "",
@@ -123,7 +123,7 @@ export default function HrTraining() {
     setEditId(training.id);
     setEditForm({
       title: training.title || "",
-      type: training.type || "seminar",
+      type: training.type || "SEMINAR",
       trainer_name: training.trainer_name || "",
       date_start: toLocalDatetimeInputValue(training.date_start),
       date_end: toLocalDatetimeInputValue(training.date_end),
@@ -138,7 +138,7 @@ export default function HrTraining() {
     setEditId(null);
     setEditForm({
       title: "",
-      type: "seminar",
+      type: "SEMINAR",
       trainer_name: "",
       date_start: "",
       date_end: "",
@@ -214,9 +214,9 @@ export default function HrTraining() {
               value={form.type}
               onChange={(e) => setForm((p) => ({ ...p, type: e.target.value }))}
             >
-              <option value="seminar">seminar</option>
-              <option value="course">course</option>
-              <option value="workshop">workshop</option>
+              <option value="SEMINAR">seminar</option>
+              <option value="TRAINING">training</option>
+              <option value="CERTIFICATION">certification</option>
             </select>
           </div>
 
@@ -366,9 +366,9 @@ export default function HrTraining() {
                                 setEditForm((p) => ({ ...p, type: e.target.value }))
                               }
                             >
-                              <option value="seminar">seminar</option>
-                              <option value="course">course</option>
-                              <option value="workshop">workshop</option>
+                              <option value="SEMINAR">seminar</option>
+                              <option value="TRAINING">course</option>
+                              <option value="CERTIFICATION">workshop</option>
                             </select>
                           ) : (
                             t.type
@@ -508,7 +508,7 @@ export default function HrTraining() {
                               <>
                                 <button
                                   className="btn btn-ghost btn-sm"
-                                  onClick={() => onQuickUpdateType(t.id, "seminar")}
+                                  onClick={() => onQuickUpdateType(t.id, "SEMINAR")}
                                 >
                                   set seminar
                                 </button>

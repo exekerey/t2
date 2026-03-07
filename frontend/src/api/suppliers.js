@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:8000"; // бэк
+const API_URL = ""; // Relative path to use Vite proxy
 
 export async function fetchSuppliers({ skip = 0, limit = 100 } = {}) {
-  const url = `${API_URL}/api/v1/suppliers/?skip=${skip}&limit=${limit}`; 
+  const url = `${API_URL}/api/v1/suppliers/?skip=${skip}&limit=${limit}`;
 
   const res = await fetch(url);
 

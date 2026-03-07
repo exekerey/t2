@@ -3,6 +3,8 @@ import uuid
 from datetime import datetime
 from pydantic import BaseModel, Field
 from .enums import TrainingRequestStatus, AttendanceStatus
+from .training import Training
+from .employee import Employee
 
 # Participant Schemas
 class TrainingRequestParticipantBase(BaseModel):
@@ -20,6 +22,7 @@ class TrainingRequestParticipant(TrainingRequestParticipantBase):
     request_id: uuid.UUID
     attendance: Optional[AttendanceStatus] = None
     certificate_number: Optional[str] = None
+    employee: Optional[Employee] = None
 
     class Config:
         from_attributes = True
@@ -56,8 +59,10 @@ class TrainingRequest(TrainingRequestBase):
     reject_reason: Optional[str] = None
     cost_amount: float
     submitted_at: Optional[datetime] = None
+    created_at: datetime
     decided_at: Optional[datetime] = None
     contract_id: Optional[uuid.UUID] = None
+    training: Optional[Training] = None
     participants: List[TrainingRequestParticipant] = []
 
     class Config:

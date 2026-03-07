@@ -9,7 +9,10 @@ import HrTrainings from "./pages/hr/HrTrainings";
 import HrListeners from "./pages/hr/HrListeners";
 import HrRequests from "./pages/hr/HrRequests";
 
-import ManagerDashboard from "./pages/ManagerDashboard";
+import ManagerDashboard from "./pages/manager/ManagerDashboard";
+import ManagerCatalog from "./pages/manager/ManagerCatalog";
+import ManagerCreateRequest from "./pages/manager/ManagerCreateRequest";
+import ManagerRequests from "./pages/manager/ManagerRequests";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import MainPage from "./pages/MainPage";
 
@@ -42,16 +45,19 @@ function App() {
           </Route>
         </Route>
 
-        {/*<Route element={<RoleRoute allowRoles={["MANAGER"]} />}>
-          <Route path="/manager" element={<ManagerDashboard />} />
-        </Route>*/}
-
-        <Route path="/manager" element={<ManagerDashboard />} />
+        {/* <Route element={<RoleRoute allowRoles={["MANAGER"]} />}> */}
+        <Route path="/manager">
+          <Route index element={<ManagerDashboard />} />
+          <Route path="catalog" element={<ManagerCatalog />} />
+          <Route path="request" element={<ManagerCreateRequest />} />
+          <Route path="requests" element={<ManagerRequests />} />
+        </Route>
+        {/* </Route> */}
 
         <Route element={<RoleRoute allowRoles={["EMPLOYEE"]} />}>
           <Route path="/employee" element={<EmployeeDashboard />} />
         </Route>
-      </Routes>
+      </Routes >
     </>
   )
 }

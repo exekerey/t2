@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = ""; // Relative path to use Vite proxy
 
 function getToken() {
   return localStorage.getItem("access_token");
@@ -9,11 +9,25 @@ function authHeaders() {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-// GET /api/v1/trainings/?skip&limit
-export async function fetchTrainings({ skip = 0, limit = 100 } = {}) {
+// GET /api/v1/trainings/?skip&limit&type&city&date_from&date_to&supplier_id
+export async function fetchTrainings({
+  skip = 0,
+  limit = 100,
+  type,
+  city,
+  date_from,
+  date_to,
+  supplier_id,
+} = {}) {
   const params = new URLSearchParams();
   params.set("skip", String(skip));
   params.set("limit", String(limit));
+
+  if (type) params.set("type", type);
+  if (city) params.set("city", city);
+  if (date_from) params.set("date_from", date_from);
+  if (date_to) params.set("date_to", date_to);
+  if (supplier_id) params.set("supplier_id", supplier_id);
 
   const url = `${API_URL}/api/v1/trainings/?${params.toString()}`;
 

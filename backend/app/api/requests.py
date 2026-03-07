@@ -7,7 +7,7 @@ from app import crud, models, schemas
 from app.deps import (
     get_db,
     get_current_active_user,
-    get_current_active_manager_user,
+    get_current_active_hr_or_manager_user,
     get_current_active_hr_user,
 )
 from app.schemas.training_request import (
@@ -28,7 +28,7 @@ router = APIRouter(prefix="/requests", tags=["requests"])
 def create_request(
     request_in: schemas.TrainingRequestCreate,
     db: Session = Depends(get_db),
-    current_user: models.Employee = Depends(get_current_active_manager_user),
+    current_user: models.Employee = Depends(get_current_active_hr_or_manager_user),
 ):
     return crud.training_request.create_with_manager(
         db, obj_in=request_in, manager_id=current_user.id

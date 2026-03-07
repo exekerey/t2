@@ -1,31 +1,35 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "./auth/useAuth";
+import logoImg from "../assets/logo.svg";
+
+const ROLE_LABELS = {
+  HR: "HR-менеджер",
+  MANAGER: "Начальник отдела",
+  EMPLOYEE: "Сотрудник",
+};
 
 export default function DashboardSidebar({
-  brandText = "Nexus",
-  userName,
-  userRole,
   navItems,
   SettingsIcon,
   LogoutIcon,
 }) {
-
+  const { me, logout } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
-
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-
-    localStorage.removeItem("user");
-
+    logout();
     navigate("/");
   }
+
+  const roleLabel = ROLE_LABELS[me?.role] || me?.role || "";
 
   return (
     <aside className="sidebar">
       <div className="brand">
-        <div className="logo" />
-        <div className="brandText">{brandText}</div>
+        <div className="logoCircle">
+          <img src={logoImg} alt="Logo" className="logo" />
+        </div>
+        <div className="brandText">Nexus</div>
       </div>
 
       <div className="divider" />
@@ -33,8 +37,8 @@ export default function DashboardSidebar({
       <div className="profile">
         <div className="avatar" />
         <div className="profileText">
-          <div className="name">{userName}</div>
-          <div className="role">{userRole}</div>
+          <div className="name">{me?.full_name || "Загрузка..."}</div>
+          <div className="role">{roleLabel}</div>
         </div>
       </div>
 

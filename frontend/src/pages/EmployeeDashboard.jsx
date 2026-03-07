@@ -26,9 +26,6 @@ export default function ManagerDashboard() {
   return (
     <div className="layout">
       <DashboardSidebar
-        brandText="Nexus"
-        userName="Айгерым Маратова"          
-        userRole="Техник-геолог"           
         navItems={navItems}
         activeIndex={0}
         SettingsIcon={SettingsIcon}
@@ -37,7 +34,7 @@ export default function ManagerDashboard() {
 
       <main className="main">
         <DashboardTopbar
-          title="Dashboard"          
+          title="Dashboard"
           SearchIcon={SearchIcon}
           BellIcon={BellIcon}
           UserIcon={UserIcon}
