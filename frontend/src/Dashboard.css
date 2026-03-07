@@ -32,10 +32,8 @@
   background: #6A6969;
 
   margin-left: -16px;
-  /* компенсируем padding sidebar */
   margin-right: -16px;
   margin-bottom: 64px;
-  /* отступ вниз */
 }
 
 .logo {
@@ -890,4 +888,331 @@
 
 .empty {
   opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════
+   MANAGER DASHBOARD STYLES
+   ═══════════════════════════════════════════════ */
+
+/* ── Stat Cards Row ── */
+.dStats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 16px 0 28px;
+}
+
+.dStatCard {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px 28px;
+  width: 280px;
+  flex: 0 1 auto;
+  box-shadow: 0 4px 20px rgba(16, 24, 40, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.dStatDecor {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #A8B8CE;
+  opacity: 0.7;
+}
+
+.dStatLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 12px;
+}
+
+.dStatValue {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: #1E293B;
+}
+
+.dStatSub {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* ── Middle Row (Requests + Certs) ── */
+.dMidRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.dReqCard,
+.dCertCard {
+  padding: 20px 24px;
+}
+
+.dCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.dCardTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.dCardLink {
+  font-size: 13px;
+  color: #64748B;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.dCardLink:hover {
+  color: #1E293B;
+}
+
+/* ── Request List Items ── */
+.dReqList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dReqItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  transition: background 0.15s;
+}
+
+.dReqItem:hover {
+  background: #F1F5F9;
+}
+
+.dReqInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dReqName {
+  font-weight: 500;
+  font-size: 14px;
+  color: #1E293B;
+}
+
+.dReqMeta {
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+/* ── Status Badge ── */
+.dBadge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dBadge--pending {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.dBadge--approved {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.dBadge--rejected {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+/* ── Certificate List ── */
+.dCertList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dCertItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.dCertAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FECACA;
+  color: #991B1B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.dCertInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.dCertName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1E293B;
+}
+
+.dCertMeta {
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.dCertCertName {
+  color: #DC2626;
+  text-decoration: line-through;
+}
+
+.dCertBtn {
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.dCertBtn:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+/* ── Progress Card ── */
+.dProgressCard {
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+.dProgressPlanLabel {
+  font-size: 13px;
+  color: #94A3B8;
+}
+
+.dProgressBody {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.dProgressBars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dProgressRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dProgressLabel {
+  width: 220px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  flex-shrink: 0;
+}
+
+.dProgressTrack {
+  flex: 1;
+  height: 10px;
+  background: #E8ECF0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dProgressFill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+.dProgressPercent {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  width: 40px;
+  text-align: right;
+}
+
+/* ── Donut Chart ── */
+.dDonut {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.dDonutSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.dDonutLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
+  .dMidRow {
+    grid-template-columns: 1fr;
+  }
+
+  .dStats {
+    flex-wrap: wrap;
+  }
+
+  .dProgressBody {
+    flex-direction: column;
+  }
 }

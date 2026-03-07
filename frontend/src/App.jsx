@@ -45,14 +45,14 @@ function App() {
           </Route>
         </Route>
 
-        {/* <Route element={<RoleRoute allowRoles={["MANAGER"]} />}> */}
-        <Route path="/manager">
-          <Route index element={<ManagerDashboard />} />
-          <Route path="catalog" element={<ManagerCatalog />} />
-          <Route path="request" element={<ManagerCreateRequest />} />
-          <Route path="requests" element={<ManagerRequests />} />
+        <Route element={<RoleRoute allowRoles={["MANAGER"]} />}>
+          <Route path="/manager">
+            <Route index element={<ManagerDashboard />} />
+            <Route path="catalog" element={<ManagerCatalog />} />
+            <Route path="request" element={<ManagerCreateRequest />} />
+            <Route path="requests" element={<ManagerRequests />} />
+          </Route>
         </Route>
-        {/* </Route> */}
 
         <Route element={<RoleRoute allowRoles={["EMPLOYEE"]} />}>
           <Route path="/employee" element={<EmployeeDashboard />} />
