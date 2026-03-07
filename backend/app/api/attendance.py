@@ -2,8 +2,8 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.deps import get_db, get_current_active_hr_user
-from app.schemas.attendance import AttendanceUpdate, CertificateNumberUpdate, ParticipantOut
+from app.deps import get_db, get_current_active_hr_user, get_current_active_user
+from app.schemas.attendance import AttendanceUpdate, CertificateNumberUpdate, ParticipantOut, CertificateOut
 from app.crud import crud_attendance
 
 router = APIRouter()
@@ -49,3 +49,16 @@ def set_certificate_number(
     current_user=Depends(get_current_active_hr_user),
 ):
     return crud_attendance.update_certificate_number(db, participant_id, body)
+
+
+@router.get(
+    "/my/certificates",
+    response_model=list[CertificateOut],
+    summary="List current employee's own certificates",
+)
+def list_my_certificates(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_active_user),
+):
+    """Get all certificates for the currently authenticated employee"""
+    return crud_attendance.get_employee_certificates(db, current_user.id)

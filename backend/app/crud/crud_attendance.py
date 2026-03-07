@@ -1,5 +1,6 @@
 from uuid import UUID
 from datetime import datetime, timezone
+from typing import List
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
@@ -8,7 +9,7 @@ from app.models.training_request import TrainingRequest
 from app.models.training_request_participant import TrainingRequestParticipant
 from app.models.training import Training
 from app.schemas.enums import TrainingRequestStatus, AttendanceStatus
-from app.schemas.attendance import AttendanceUpdate, CertificateNumberUpdate, ParticipantOut
+from app.schemas.attendance import AttendanceUpdate, CertificateNumberUpdate, ParticipantOut, CertificateOut
 
 
 def _to_out(p: TrainingRequestParticipant) -> ParticipantOut:
@@ -100,3 +101,32 @@ def update_certificate_number(
     db.refresh(participant)
 
     return _to_out(participant)
+
+
+def get_employee_certificates(db: Session, employee_id: UUID) -> List[CertificateOut]:
+    """Get all certificates for an employee (where attendance=present and certificate_number is set)"""
+    results = (
+        db.query(TrainingRequestParticipant, Training)
+        .join(TrainingRequest, TrainingRequestParticipant.request_id == TrainingRequest.id)
+        .join(Training, TrainingRequest.training_id == Training.id)
+        .filter(
+            TrainingRequestParticipant.employee_id == employee_id,
+            TrainingRequestParticipant.attendance == AttendanceStatus.PRESENT,
+            TrainingRequestParticipant.certificate_number.isnot(None),
+            TrainingRequest.status == TrainingRequestStatus.APPROVED,
+        )
+        .all()
+    )
+
+    return [
+        CertificateOut(
+            certificate_number=participant.certificate_number,
+            training_id=training.id,
+            training_title=training.title,
+            training_type=training.type.value if training.type else None,
+            training_date_start=training.date_start,
+            training_date_end=training.date_end,
+            issued_at=participant.updated_at,
+        )
+        for participant, training in results
+    ]

@@ -26,3 +26,17 @@ class ParticipantOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class CertificateOut(BaseModel):
+    """Certificate info for employee's own certificates view"""
+    certificate_number: str
+    training_id: UUID
+    training_title: Optional[str] = None
+    training_type: Optional[str] = None
+    training_date_start: Optional[datetime] = None
+    training_date_end: Optional[datetime] = None
+    issued_at: datetime
+
+    class Config:
+        from_attributes = True

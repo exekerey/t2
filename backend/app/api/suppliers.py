@@ -16,6 +16,12 @@ def create_supplier(
     """
     Create new supplier (HR only).
     """
+    supplier = crud.supplier.get_by_bin(db, bin=supplier_in.bin)
+    if supplier:
+        raise HTTPException(
+            status_code=400,
+            detail="A supplier with this BIN already exists.",
+        )
     supplier = crud.supplier.create(db=db, obj_in=supplier_in)
     return supplier
 
@@ -58,6 +64,13 @@ def update_supplier(
     supplier = crud.supplier.get(db=db, id=id)
     if not supplier:
         raise HTTPException(status_code=404, detail="Supplier not found")
+    if supplier_in.bin and supplier_in.bin != supplier.bin:
+        existing = crud.supplier.get_by_bin(db, bin=supplier_in.bin)
+        if existing:
+            raise HTTPException(
+                status_code=400,
+                detail="A supplier with this BIN already exists.",
+            )
     supplier = crud.supplier.update(db=db, db_obj=supplier, obj_in=supplier_in)
     return supplier
 
