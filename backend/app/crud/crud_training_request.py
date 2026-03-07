@@ -70,9 +70,9 @@ class CRUDTrainingRequest(CRUDBase[TrainingRequest, TrainingRequestCreate, dict]
         current_hr_id: UUID,
     ) -> TrainingRequest:
         request = (
-            db.query(TrainingRequest)
-            .filter(TrainingRequest.id == request_id)
-            .options(joinedload(TrainingRequest.participants))
+            db.query(self.model)
+            .filter(self.model.id == request_id)
+            .options(joinedload(self.model.participants))
             .first()
         )
         if not request:

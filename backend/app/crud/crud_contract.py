@@ -1,9 +1,10 @@
 from typing import List, Optional
 import uuid
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.crud.base import CRUDBase
 from app.models.contract import Contract
+from app.models.contract_spend import ContractSpend
 from app.schemas.contract import ContractCreate, ContractUpdate
 from app.schemas.enums import ContractStatus
 
@@ -18,7 +19,9 @@ class CRUDContract(CRUDBase[Contract, ContractCreate, ContractUpdate]):
         skip: int = 0,
         limit: int = 100,
     ) -> List[Contract]:
-        q = db.query(self.model)
+        q = db.query(self.model).options(
+            joinedload(self.model.spends).joinedload(ContractSpend.request)
+        )
 
         if status is not None:
             q = q.filter(self.model.status == status)
