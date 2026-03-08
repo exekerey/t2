@@ -1,6 +1,14 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import HrDashboard from "./pages/HrDashboard";
+import HrLayout from "./layouts/HrLayout";
+
+import HrDashboardHome from "./pages/hr/HrDashboardHome";
+import HrSuppliers from "./pages/hr/HrSuppliers";
+import HrContracts from "./pages/hr/HrContracts";
+import HrTrainings from "./pages/hr/HrTrainings";
+import HrListeners from "./pages/hr/HrListeners";
+import HrRequests from "./pages/hr/HrRequests";
+
 import ManagerDashboard from "./pages/ManagerDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import MainPage from "./pages/MainPage";
@@ -12,7 +20,7 @@ import RoleRoute from "./components/auth/RoleRoute";
 
 
 function App() {
-  
+
   return (
     <>
       <Routes>
@@ -24,7 +32,14 @@ function App() {
         </Route>
 
         <Route element={<RoleRoute allowRoles={["HR"]} />}>
-          <Route path="/hr" element={<HrDashboard />} />
+          <Route path="/hr" element={<HrLayout />}>
+            <Route index element={<HrDashboardHome />} />
+            <Route path="suppliers" element={<HrSuppliers />} />
+            <Route path="contracts" element={<HrContracts />} />
+            <Route path="trainings" element={<HrTrainings />} />
+            <Route path="listeners" element={<HrListeners />} />
+            <Route path="requests" element={<HrRequests />} />
+          </Route>
         </Route>
 
         <Route element={<RoleRoute allowRoles={["MANAGER"]} />}>

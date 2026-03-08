@@ -1,12 +1,26 @@
+import { NavLink, useNavigate } from "react-router-dom";
+
 export default function DashboardSidebar({
   brandText = "Nexus",
   userName,
   userRole,
   navItems,
-  activeIndex = 0,
   SettingsIcon,
   LogoutIcon,
 }) {
+
+  const navigate = useNavigate();
+
+  function handleLogout() {
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    localStorage.removeItem("user");
+
+    navigate("/");
+  }
+
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -25,19 +39,23 @@ export default function DashboardSidebar({
       </div>
 
       <nav className="nav">
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           const IconComponent = item.icon;
+
           return (
-            <button
+            <NavLink
               key={item.label}
-              className={`navItem ${index === activeIndex ? "active" : ""}`}
-              type="button"
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) =>
+                `navItem ${isActive ? "active" : ""}`
+              }
             >
               <span className="navIcon">
                 <IconComponent />
               </span>
               <span>{item.label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>
@@ -50,7 +68,11 @@ export default function DashboardSidebar({
           Настройки
         </button>
 
-        <button className="bottomItem" type="button">
+        <button
+          className="bottomItem"
+          type="button"
+          onClick={handleLogout}
+        >
           <span className="navIcon">
             <LogoutIcon />
           </span>
