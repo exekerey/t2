@@ -1,6 +1,6 @@
 import api from "../../api/api";
 
-// OAuth2 login (form-urlencoded)
+
 export async function login({ username, password }) {
   const body = new URLSearchParams();
   body.set("username", username);

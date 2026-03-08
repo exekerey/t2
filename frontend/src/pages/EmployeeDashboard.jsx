@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { getTrainings } from "../api/trainingEmployee";
+
 import "../Dashboard.css";
 
 import DashboardSidebar from "../components/Sidebar";
@@ -22,13 +25,31 @@ const navItems = [
   { label: "Сертификаты", icon: CertificateIcon },
 ];
 
-export default function ManagerDashboard() {
+export default function EmployeeDashboard() {
+  const [trainings, setTrainings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadTrainings() {
+      try {
+        const data = await getTrainings();
+        setTrainings(data || []);
+      } catch (err) {
+        console.error("Error loading trainings", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadTrainings();
+  }, []);
+
   return (
     <div className="layout">
       <DashboardSidebar
         brandText="Nexus"
-        userName="Айгерым Маратова"          
-        userRole="Техник-геолог"           
+        userName="Employee Name"
+        userRole="Employee"
         navItems={navItems}
         activeIndex={0}
         SettingsIcon={SettingsIcon}
@@ -37,44 +58,49 @@ export default function ManagerDashboard() {
 
       <main className="main">
         <DashboardTopbar
-          title="Dashboard"          
+          title="Dashboard"
           SearchIcon={SearchIcon}
           BellIcon={BellIcon}
           UserIcon={UserIcon}
           searchPlaceholder="Поиск..."
         />
 
-        <div className="employeeStats">
-          {Array.from({ length: 3 }).map((_, idx) => (
-            <div key={idx} className="card employeeStatCard" />
-          ))}
-        </div>
-
-        <div className="grid2">
-          <section>
-            <div className="sectionHeader">
-              <h2>Предстоящие обучения</h2>
-              <button className="linkBtn">Расписание</button>
-            </div>
-            <div className="card bigCard" />
-          </section>
-
-          <section>
-            <div className="sectionHeader">
-              <h2>Мой прогресс</h2>
-            </div>
-            <div className="card bigCard2" />
-          </section>
-        </div>
-
         <section className="contracts">
           <div className="sectionHeader">
-            <h2>Последние обучения</h2>
-            <button className="historyBtn">Вся история</button>
+            <h2>Предстоящие обучения</h2>
           </div>
 
+          {loading && <p className="loading">Loading trainings...</p>}
+
+          {!loading && trainings.length === 0 && (
+            <p className="empty">Нет доступных обучений</p>
+          )}
+
           <div className="grid2Bottom">
-            <div className="card midCard2" />
+            {trainings.map((training) => (
+              <div key={training.id} className="card trainingCard">
+                <h3 className="trainingTitle">{training.title}</h3>
+
+                <div className="trainingInfo">
+                  <p>
+                    <strong>Trainer:</strong>{" "}
+                    {training.trainer_name || "Unknown"}
+                  </p>
+
+                  <p>
+                    <strong>Location:</strong>{" "}
+                    {training.location || "Online"}
+                  </p>
+
+                  <p>
+                    <strong>Start:</strong>{" "}
+                    {training.date_start
+                      ? new Date(training.date_start).toLocaleDateString()
+                      : "TBA"}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </main>
