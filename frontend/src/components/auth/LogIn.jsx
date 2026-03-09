@@ -4,10 +4,11 @@ import { useAuth } from "../auth/useAuth";
 import "./Login.css";
 
 function roleToHome(role) {
-  if (role === "HR") return "/hr";
+  if (role === "HR") return "/";
   if (role === "MANAGER") return "/manager";
   return "/employee";
 }
+
 
 export default function Login() {
   const navigate = useNavigate();

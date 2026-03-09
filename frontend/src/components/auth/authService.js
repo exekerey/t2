@@ -35,5 +35,6 @@ export async function me() {
 
 export function logout() {
   localStorage.removeItem("access_token");
-  localStorage.removeItem("token_type");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("user");
 }
