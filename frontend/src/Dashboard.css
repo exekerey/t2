@@ -35,10 +35,10 @@
   margin-bottom: 64px;  /* отступ вниз */
 }
 .logo{
-  width: 43px;
-  height: 42px;
+  width: 24px;
+  height: 24px;
   border-radius: 15px;
-  background: #C6D6EC;
+  background: #FFFFFF;
 }
 .brandText{
   font-weight: bold;
@@ -809,3 +809,38 @@
   opacity: 0.7;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo svg {
+  width: 24px;
+  height: 24px;
+  color: #2B2D42;
+}
+
+.logo [stroke]:not([stroke="none"]),
+.vsFeatureTile-icon [stroke]:not([stroke="none"]) {
+  stroke: currentColor !important;
+}
+
+.logo [fill]:not([fill="none"]),
+.vsFeatureTile-icon [fill]:not([fill="none"]) {
+  fill: currentColor !important;
+}
+
+.brandText {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}

@@ -1,6 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
 import "../Dashboard.css"; 
 
+import { useAuth } from "../components/auth/useAuth";
+
 import DashboardSidebar from "../components/Sidebar";
 import DashboardTopbar from "../components/Topbar";
 
@@ -20,8 +22,16 @@ import BellIcon from "../assets/icons/notification.svg?react";
 import UserIcon from "../assets/icons/user.svg?react";
 import SearchIcon from "../assets/icons/search.svg?react";
 
+function roleLabel(role) {
+  if (role === "HR") return "HR-менеджер";
+  if (role === "MANAGER") return "Начальник отдела";
+  if (role === "EMPLOYEE") return "Сотрудник";
+  return role;
+}
+
 export default function HrLayout() {
   const { pathname } = useLocation();
+  const { me } = useAuth();
 
   const navItems = [
     { label: "Dashboard", to: "/hr", icon: DashboardIcon, end: true },
@@ -46,12 +56,13 @@ export default function HrLayout() {
       <DashboardSidebar
         brandText="Nexus"
         Logo={Logo}
-        userName="Айгерим Маратова"
-        userRole="HR-менеджер"
+        userName={me?.full_name || ""}
+        userRole={roleLabel(me?.role)}
         navItems={navItems}
         SettingsIcon={SettingsIcon}
         LogoutIcon={LogoutIcon}
       />
+
 
       <main className="main">
         <DashboardTopbar
